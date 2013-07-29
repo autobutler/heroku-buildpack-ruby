@@ -74,27 +74,29 @@ WARNING
           if Dir.glob('public/assets/manifest-*.json').any?
             puts "Detected manifest file, assuming assets were compiled locally"
           else
-            ENV["RAILS_GROUPS"] ||= "assets"
-            ENV["RAILS_ENV"]    ||= "production"
+            # noop assets precompilation
+            
+            # ENV["RAILS_GROUPS"] ||= "assets"
+            # ENV["RAILS_ENV"]    ||= "production"
 
-            @cache.load public_assets_folder
+            # @cache.load public_assets_folder
 
-            puts "Running: rake assets:precompile"
-            require 'benchmark'
-            time = Benchmark.realtime { pipe("env PATH=$PATH:bin bundle exec rake assets:precompile 2>&1 > /dev/null") }
+            # puts "Running: rake assets:precompile"
+            # require 'benchmark'
+            # time = Benchmark.realtime { pipe("env PATH=$PATH:bin bundle exec rake assets:precompile 2>&1 > /dev/null") }
 
-            if $?.success?
-              log "assets_precompile", :status => "success"
-              puts "Asset precompilation completed (#{"%.2f" % time}s)"
+            # if $?.success?
+            #   log "assets_precompile", :status => "success"
+            #   puts "Asset precompilation completed (#{"%.2f" % time}s)"
 
-              puts "Cleaning assets"
-              pipe "env PATH=$PATH:bin bundle exec rake assets:clean 2>& 1"
+            #   puts "Cleaning assets"
+            #   pipe "env PATH=$PATH:bin bundle exec rake assets:clean 2>& 1"
 
-              @cache.store public_assets_folder
-            else
-              log "assets_precompile", :status => "failure"
-              error "Precompiling assets failed."
-            end
+            #   @cache.store public_assets_folder
+            # else
+            #   log "assets_precompile", :status => "failure"
+            #   error "Precompiling assets failed."
+            # end
           end
         else
           puts "Error detecting the assets:precompile task"
