@@ -56,6 +56,12 @@ private
 
   # runs the tasks for the Rails 3.1 asset pipeline
   def run_assets_precompile_rake_task
+    return true
+
+    ##########
+    #### NOOP
+    ##########
+
     instrument "rails3.run_assets_precompile_rake_task" do
       log("assets_precompile") do
         setup_database_url_env
